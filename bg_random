@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+# randomly selects an image from a folder
+
+import os
+import random
+import sys
+
+# color codes cuz i like colors
+RED = "\u001b[0;31m"
+GRN = "\u001b[0;32m"
+BLU = "\u001b[0;34m"
+RESET = "\u001b[0m"
+
+ERROR = f"{RED}error{RESET}:"
+NOTE = f"{BLU}note{RESET}:"
+
+def usage():
+    print(f"{ERROR} no folder provided")
+    print(f"{GRN}usage{RESET}: {sys.argv[0]} [folder]")
+    print(f"{NOTE} folder should contain images ONLY")
+    exit()
+
+def main():
+    argc = len(sys.argv)
+    if argc == 1: usage()
+    
+    folder = sys.argv[1]
+    
+    files = [f for f in os.listdir(folder) if os.path.isfile(os.path.join(folder, f))]
+    fsize = len(files)
+    index = random.randrange(1, fsize)
+    print(f"{os.path.join(folder, files[index])}")
+
+if __name__ == "__main__":
+    main()
+
