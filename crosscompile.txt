@@ -1,0 +1,18 @@
+Linux:
+	x86_64-linux-gnu-gcc or gcc, clang, tcc, whatever -> linux
+	x86_64-apple-darwin*-clang -> crosscompile to macOS (from osxcross)
+	x86_64-w64-mingw32-gcc -> crosscompile to Windows
+macOS:
+	clang -> macOS (apple clang kinda goofy, use llvm clang instead)
+	x86_64-pc-linux-gnu-gcc -> crosscompile to linux
+		from crosstool-ng
+		ct-ng list-samples
+		ct-ng x86_64-pc-linux-gnu
+		ct-ng build
+	x86_64-w64-mingw32-gcc -> crosscompile to Windows
+Windows:
+	msvc, gcc, clang -> Windows (gcc from mingw)
+	gcc, clang -> crosscompile to linux, from wsl2
+	x86_64-w64-mingw32-gcc -> Windows from wsl2
+	x86_64-apple-darwin*-clang -> crosscompile to macOS (from osxcross)
+

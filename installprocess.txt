@@ -1,0 +1,4 @@
+1. clone repo
+2. install packages (zsh, bash, x11, python)
+3. sudo ./config install
+4. hope everything still works

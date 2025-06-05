@@ -41,7 +41,7 @@ def xinitrc():
         print("\nrestarting\n")
         xinitrc()
     
-.
+
 def status_code(code):
     if code == 200: print(f"{GRN}200 OK{RESET}")
     elif code == 404: print(f"{RED}404 Not Found{RESET}")

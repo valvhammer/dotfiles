@@ -12,11 +12,16 @@ compinit
 # End of lines added by compinstall
 
 export PS1="%B%F{1}[%F{3}%n%F{2}@%F{4}%m %F{5}%~%F{1}]%F{7} $ %b%f"
+export PATH=$PATH:"/home/hammer/.local/share/Steam/steamapps/common/Blender":"/home/hammer/dev/thirdparty/osxcross/target/bin":"/home/hammer/opt/djgpp/bin"
+export status_command=i3bar
+export PYTHONDONTWRITEBYTECODE=1
 
+
+setopt +o nomatch
 
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    #alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -27,9 +32,12 @@ fi
 
 
 # some more ls aliases
+alias ls="lsd"
+alias cat="bat"
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='ls -CF'
+alias l='ls -F'
+
 
 # more alias
 alias move='mv'
@@ -39,9 +47,8 @@ alias rd='rmdir'
 alias python='python3'
 alias setbg='feh --bg-fill' # change if you want to
 alias feh='feh --scale'
-alias todos='grep -rn TODO: '
+alias todos='grep -rn TODO: ; grep -rn todo: '
 
-export MAKEFLAGS="-j4"
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
