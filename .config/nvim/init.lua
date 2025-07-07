@@ -12,6 +12,7 @@ Plug('preservim/nerdtree')
 Plug('nvim-lua/plenary.nvim')
 Plug('ej-shafran/compile-mode.nvim')
 Plug('RaafatTurki/hex.nvim')
+Plug('hrsh7th/nvim-cmp')
 
 vim.call('plug#end')
 
@@ -28,6 +29,15 @@ require('nvim-treesitter.configs').setup {
     ensure_installed = { "c", "cpp", "lua", "python", "glsl", "java" },
 }
 
+require('cmp').setup({
+	completion = {
+		autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
+	},
+	sources = {
+		{ name = "nvim-lsp" },
+		{ name = "buffer" },
+	},
+})
 
 vim.api.nvim_create_autocmd("ColorScheme", {
     pattern = "*",
