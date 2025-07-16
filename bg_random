@@ -15,6 +15,17 @@ RESET = "\u001b[0m"
 ERROR = f"{RED}error{RESET}:"
 NOTE = f"{BLU}note{RESET}:"
 
+def list(path):
+    image_exts = ( ".jpg", ".jpeg", ".png", ".bmp", ".ppm" )
+    
+    images = []
+    
+    for fn in os.listdir(path):
+        if fn.lower().endswith(image_exts):
+            images.append(fn)
+    
+    return images
+
 def usage():
     print(f"{ERROR} no folder provided")
     print(f"{GRN}usage{RESET}: {sys.argv[0]} [folder]")
@@ -27,7 +38,7 @@ def main():
     
     folder = sys.argv[1]
     
-    files = [f for f in os.listdir(folder) if os.path.isfile(os.path.join(folder, f))]
+    files = list(folder)
     print(f"{os.path.join(folder, files[random.randrange(0,len(files))])}")
 
 if __name__ == "__main__":
