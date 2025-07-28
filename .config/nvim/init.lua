@@ -4,6 +4,7 @@ local Plug = vim.fn['plug#']
 vim.call('plug#begin')
 
 Plug('Mofiqul/vscode.nvim')
+Plug('morhetz/gruvbox')
 Plug('vim-airline/vim-airline')
 Plug('tpope/vim-fugitive')
 Plug('nvim-treesitter/nvim-treesitter')
@@ -14,6 +15,7 @@ Plug('ej-shafran/compile-mode.nvim')
 Plug('RaafatTurki/hex.nvim')
 Plug('hrsh7th/nvim-cmp')
 
+
 vim.call('plug#end')
 
 require('vscode').setup({
@@ -21,7 +23,7 @@ require('vscode').setup({
     disable_nvimtree_bg = true,
 })
 
-require('vscode').load('dark')
+--require('vscode').load('dark')
 
 require('nvim-treesitter.configs').setup {
     highlight = { enable = true },
@@ -39,24 +41,32 @@ require('cmp').setup({
 	},
 })
 
+--vim.api.nvim_create_autocmd("ColorScheme", {
+--    pattern = "*",
+--    callback = function()
+--        vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#FFD70A" })
+--        vim.api.nvim_set_hl(0, "@type.definition",  { fg = "#33BBB0" })
+--        vim.api.nvim_set_hl(0, "@type",             { fg = "#33BBB0" })
+--        vim.api.nvim_set_hl(0, "@constant.macro",   { fg = "#569CD6" })
+--        vim.api.nvim_set_hl(0, "@function",         { fg = "#DCDC9D" })
+--        vim.api.nvim_set_hl(0, "@keyword.type",     { fg = "#569CD6" })
+--        vim.api.nvim_set_hl(0, "@include",          { fg = "#569CD6" })
+--        vim.api.nvim_set_hl(0, "@string",           { fg = "#CE9178" })
+--        vim.api.nvim_set_hl(0, "@number",           { fg = "#B5CEA8" })
+--        vim.api.nvim_set_hl(0, "@comment",          { fg = "#6A9955" })
+--        vim.api.nvim_set_hl(0, "@operator",         { fg = "#D4D4D4" })
+--        vim.api.nvim_set_hl(0, "@keyword",          { fg = "#C586C0" })
+--        vim.api.nvim_set_hl(0, "@keyword.function", { fg = "#569CD6" })
+--        vim.api.nvim_set_hl(0, "@keyword.modifier", { fg = "#569CD6" })
+--    end,
+--})
+
 vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = function()
-        vim.api.nvim_set_hl(0, "@punctuation.bracket", { fg = "#FFD70A" })
-        vim.api.nvim_set_hl(0, "@type.definition",  { fg = "#33BBB0" })
-        vim.api.nvim_set_hl(0, "@type",             { fg = "#33BBB0" })
-        vim.api.nvim_set_hl(0, "@constant.macro",   { fg = "#569CD6" })
-        vim.api.nvim_set_hl(0, "@function",         { fg = "#DCDC9D" })
-        vim.api.nvim_set_hl(0, "@keyword.type",     { fg = "#569CD6" })
-        vim.api.nvim_set_hl(0, "@include",          { fg = "#569CD6" })
-        vim.api.nvim_set_hl(0, "@string",           { fg = "#CE9178" })
-        vim.api.nvim_set_hl(0, "@number",           { fg = "#B5CEA8" })
-        vim.api.nvim_set_hl(0, "@comment",          { fg = "#6A9955" })
-        vim.api.nvim_set_hl(0, "@operator",         { fg = "#D4D4D4" })
-        vim.api.nvim_set_hl(0, "@keyword",          { fg = "#C586C0" })
-        vim.api.nvim_set_hl(0, "@keyword.function", { fg = "#569CD6" })
-        vim.api.nvim_set_hl(0, "@keyword.modifier", { fg = "#569CD6" })
-    end,
+	pattern = "*",
+	callback = function()
+		vim.api.nvim_set_hl(0, "@variable", { fg = "#82a497" })
+		vim.api.nvim_set_hl(0, "@operator", { fg = "#fd8019", bold = true, }) 
+	end,
 })
 
 vim.cmd("doautocmd ColorScheme")
@@ -69,6 +79,9 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = false
 vim.opt.showmode = false
 vim.opt.shortmess:append("I")
+
+vim.cmd("colorscheme gruvbox")
+vim.cmd("highlight Normal guibg=#000000") 
 
 vim.g.clipboard = {
     name = "xclip",
