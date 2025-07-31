@@ -69,3 +69,6 @@ URxvt.keysym.Shift-Control-V:    perl:pasta:paste
 !URxvt.clipboard.autocopy: true
 URxvt.keysym.C-j:       perl:font-size:increase
 URxvt.keysym.C-k:       perl:font-size:decrease
+
+Xcursor.theme: Adwaita
+Xcursor.size: 22
