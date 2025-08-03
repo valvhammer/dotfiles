@@ -13,6 +13,8 @@ Plug('preservim/nerdtree')
 Plug('nvim-lua/plenary.nvim')
 Plug('ej-shafran/compile-mode.nvim')
 Plug('RaafatTurki/hex.nvim')
+Plug('williamboman/mason.nvim')
+Plug('williamboman/mason-lspconfig.nvim')
 Plug('neovim/nvim-lspconfig')
 Plug('hrsh7th/cmp-nvim-lsp')
 Plug('hrsh7th/cmp-buffer')
@@ -37,6 +39,25 @@ require('nvim-treesitter.configs').setup {
     ensure_installed = { "c", "cpp", "lua", "python", "glsl", "java" },
 }
 
+require('mason').setup()
+
+local masonlspconf = require("mason-lspconfig")
+
+masonlspconf.setup({
+	ensure_installed = { "clangd", "jdtls" },
+})
+
+local lspconfig = require('lspconfig')
+
+--masonlspconf.setup_handlers({
+--	function(server_name)
+--		lspconfig[server_name].setup {}
+--	end,
+--})
+
+lspconfig["clangd"].setup {}
+lspconfig["jdtls"].setup {}
+
 local cmp = require('cmp')
 
 cmp.setup({
@@ -60,6 +81,13 @@ cmp.setup({
 	})
 })	
 
+cmp.setup.cmdline(':', {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = 'path' }, { name = 'buffer' }
+	}),
+	matching = { disallow_symbol_nonprefix_matching = false }
+})
 
 
 -- for vscode
@@ -131,13 +159,6 @@ vim.api.nvim_set_hl(0, "CursorLineNr", {fg = "#ffdd33", bg = "NONE", bold = true
 
 vim.g['airline#extentions#branch#enabled'] = 1
 vim.g['airline#extensions#whitespace#enabled'] = 0
-
-
-vim.api.nvim_create_autocmd("TermClose", {
-    callback = function()
-        vim.cmd("close")
-    end
-})
 
 vim.api.nvim_create_user_command("Term", function()
     vim.cmd("tabnew | terminal")
