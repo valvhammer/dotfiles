@@ -96,7 +96,7 @@ bindsym $mod+Shift+Right move right
 # apps
 bindsym control+F1 exec st btop
 bindsym control+F2 exec discord
-bindsym control+F3 exec firefox
+bindsym control+F3 exec brave
 bindsym shift+0 exec boomer
 bindsym $win+Shift+s exec spectacle
 
