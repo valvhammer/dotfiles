@@ -12,7 +12,6 @@ Plug('nvim-treesitter/playground')
 Plug('preservim/nerdtree')
 Plug('nvim-lua/plenary.nvim')
 Plug('ej-shafran/compile-mode.nvim')
-Plug('RaafatTurki/hex.nvim')
 Plug('williamboman/mason.nvim')
 Plug('williamboman/mason-lspconfig.nvim')
 Plug('neovim/nvim-lspconfig')
@@ -126,7 +125,7 @@ vim.opt.rnu = true
 vim.opt.cursorline = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.expandtab = false
+vim.opt.expandtab = true
 vim.opt.showmode = false
 vim.opt.shortmess:append("I")
 
@@ -160,8 +159,30 @@ vim.api.nvim_set_hl(0, "CursorLineNr", {fg = "#ffdd33", bg = "NONE", bold = true
 vim.g['airline#extentions#branch#enabled'] = 1
 vim.g['airline#extensions#whitespace#enabled'] = 0
 
+vim.g.compile_mode = {}
+
+vim.keymap.set("n", "<C-d>", ":Compile<CR>", { noremap = true })
+vim.keymap.set("n", "<C-s>", ":w<CR>", {noremap = true })
+
+vim.keymap.set("n", "<S-a>", ":source ~/.config/nvim/init.lua<CR>", {noremap = true})
+
+vim.keymap.set("n", "<S-s>", function()
+    vim.cmd("saveas" .. vim.fn.input("File name: "))
+end)
+
+vim.keymap.set("n", "<C-e>", function()
+  vim.cmd("split | terminal " .. vim.fn.input("Shell command: "))
+end)
+
+
 vim.api.nvim_create_user_command("Term", function()
     vim.cmd("tabnew | terminal")
 end, {})
 
+vim.api.nvim_create_user_command("TransOn", function()
+	vim.cmd("highlight Normal guibg=#000000b2")
+end, {})
 
+vim.api.nvim_create_user_command("TransOff", function()
+	vim.cmd("highlight Normal guibg=#000000")
+end, {})
