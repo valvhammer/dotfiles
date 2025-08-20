@@ -58,36 +58,77 @@ lspconfig["clangd"].setup {}
 lspconfig["jdtls"].setup {}
 
 local cmp = require('cmp')
+--
+--cmp.setup({
+--	snippet = {
+--		expand = function(args)
+--			vim.fn["vsnip#anonymous"](args.body)
+--		end,
+--	},
+--	mapping = cmp.mapping.preset.insert({
+--		['<C-b>'] = cmp.mapping.scroll_docs(-4),
+--		['<C-f>'] = cmp.mapping.scroll_docs(4),
+--		['<C-Space>'] = cmp.mapping.complete(),
+--		['<C-e>'] = cmp.mapping.abort(),
+--		['<CR>'] = cmp.mapping.confirm({select = true})
+--	}),
+--	sources = cmp.config.sources({
+--		{ name = 'nvim_lsp' },
+--		{ name = "vsnip"},
+--	}, {
+--		{ name = 'buffer' },
+--	})
+--})	
 
 cmp.setup({
-	snippet = {
-		expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body)
-		end,
-	},
-	mapping = cmp.mapping.preset.insert({
-		['<C-b>'] = cmp.mapping.scroll_docs(-4),
-		['<C-f>'] = cmp.mapping.scroll_docs(4),
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<C-e>'] = cmp.mapping.abort(),
-		['<CR>'] = cmp.mapping.confirm({select = true})
-	}),
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = "vsnip"},
-	}, {
-		{ name = 'buffer' },
-	})
-})	
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    mapping = {
+      ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+      ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+      ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+      ['<C-e>'] = cmp.mapping({
+          i = cmp.mapping.abort(),
+          c = cmp.mapping.close(),
+        }),
+      ['<CR>'] = cmp.mapping.confirm({ select = false, behavior = cmp.ConfirmBehavior.Insert }),
+    },
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'vsnip' }, -- For vsnip users.
+        -- { name = 'luasnip' }, -- For luasnip users.
+        --{ name = 'ultisnips' }, -- For ultisnips users.
+        --{ name = 'snippy' }, -- For snippy users.
+      }, {
+        { name = 'buffer' },
+      })
+  })
+
 
 cmp.setup.cmdline(':', {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = cmp.config.sources({
-		{ name = 'path' }, { name = 'buffer' }
+		{ name = 'path' }, { name = 'cmdline' }
 	}),
 	matching = { disallow_symbol_nonprefix_matching = false }
 })
 
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'buffer' }
+    })
+})
 
 -- for vscode
 --vim.api.nvim_create_autocmd("ColorScheme", {
@@ -117,6 +158,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		vim.api.nvim_set_hl(0, "@operator", { fg = "#fd8019", bold = true, }) 
 	end,
 })
+
 
 vim.cmd("doautocmd ColorScheme")
 
@@ -154,6 +196,7 @@ vim.filetype.add({
     }
 })
 
+vim.api.nvim_set_hl(0, "CursorLine", {bg = "#181818"})
 vim.api.nvim_set_hl(0, "CursorLineNr", {fg = "#ffdd33", bg = "NONE", bold = true})
 
 vim.g['airline#extentions#branch#enabled'] = 1
@@ -163,7 +206,10 @@ vim.g.compile_mode = {}
 
 vim.keymap.set("n", "<C-d>", ":Compile<CR>", { noremap = true })
 vim.keymap.set("n", "<C-s>", ":w<CR>", {noremap = true })
-
+vim.keymap.set("n", "<C-f>", "/", {noremap = true})
+vim.keymap.set("n", "<M-g>", function()
+    vim.cmd("+Man " .. vim.fn.input("Manpage: "))
+end)
 vim.keymap.set("n", "<S-a>", ":source ~/.config/nvim/init.lua<CR>", {noremap = true})
 
 vim.keymap.set("n", "<S-s>", function()
@@ -180,7 +226,7 @@ vim.api.nvim_create_user_command("Term", function()
 end, {})
 
 vim.api.nvim_create_user_command("TransOn", function()
-	vim.cmd("highlight Normal guibg=#000000b2")
+	vim.cmd("highlight Normal guibg=#00000000")
 end, {})
 
 vim.api.nvim_create_user_command("TransOff", function()
